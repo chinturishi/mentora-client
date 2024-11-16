@@ -21,6 +21,8 @@ const AuthPage = () => {
     setSignInFormData,
     signUpFormData,
     setSignUpFormData,
+    handleRegisterUser,
+    handleLoginUser,
   } = useContext(AuthContext);
 
   const handleTabChange = (value) => {
@@ -29,12 +31,21 @@ const AuthPage = () => {
   //console.log(signInFormData);
 
   const isSignInFormValid = () => {
-    return (signInFormData && signInFormData.userEmail!=="" && signInFormData.password!=="");
-  }
+    return (
+      signInFormData &&
+      signInFormData.userEmail !== "" &&
+      signInFormData.password !== ""
+    );
+  };
 
   const isSignUpFormValid = () => {
-    return (signUpFormData && signUpFormData.userEmail!=="" && signUpFormData.password!=="" && signUpFormData.userName!=="");
-  }
+    return (
+      signUpFormData &&
+      signUpFormData.userEmail !== "" &&
+      signUpFormData.password !== "" &&
+      signUpFormData.userName !== ""
+    );
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -70,6 +81,7 @@ const AuthPage = () => {
                   formData={signInFormData}
                   setFormData={setSignInFormData}
                   isButtonDisabled={!isSignInFormValid()}
+                  handleSubmit={handleLoginUser}
                 />
               </CardContent>
             </Card>
@@ -89,6 +101,7 @@ const AuthPage = () => {
                   formData={signUpFormData}
                   setFormData={setSignUpFormData}
                   isButtonDisabled={!isSignUpFormValid()}
+                  handleSubmit={handleRegisterUser}
                 />
               </CardContent>
             </Card>
