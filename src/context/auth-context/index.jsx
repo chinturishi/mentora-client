@@ -15,19 +15,16 @@ const AuthProvider = (props) => {
   const handleRegisterUser = async (event) => {
     event.preventDefault();
     const data = await registerService(signUpFormData);
-    console.log(data);
   };
 
   const handleLoginUser = async (event) => {
     event.preventDefault();
     const data = await loginService(signInFormData);
-    console.log(data);
     if (data.success) {
-      console.log(JSON.stringify(data.data.token));
       sessionStorage.setItem("accessToken", JSON.stringify(data.data.token));
       setAuth({
         authenticated: true,
-        user: data.user,
+        user: data.data.user,
       });
     } else {
       setAuth({
@@ -39,7 +36,6 @@ const AuthProvider = (props) => {
 
   const checkAuthUser = async () => {
     const data = await checkAuthService();
-    console.log("checkAuthUser", data);
     if (data.success) {
       setAuth({
         authenticated: true,
@@ -54,12 +50,8 @@ const AuthProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log("use effect");
     checkAuthUser();
-    console.log(auth);
   }, []);
-
-  console.log(auth);
 
   return (
     <AuthContext.Provider
@@ -70,6 +62,7 @@ const AuthProvider = (props) => {
         setSignUpFormData,
         handleRegisterUser,
         handleLoginUser,
+        auth,
       }}
     >
       {props.children}
